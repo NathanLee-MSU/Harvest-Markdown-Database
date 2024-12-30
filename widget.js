@@ -48,7 +48,7 @@
                     const sqlite3 = require('sqlite3');
 
                     const db = new sqlite3.Database('./docs.db');
-                    console.log("test");
+                    console.log(db.get(SELECT * FROM documents));
                 `/*Javascript code goes here*/))
                 wdg.appendChild(wdg.script)
                 return wdg;
@@ -61,4 +61,8 @@
 
     document.write(`<div id= ${ id } ></div>`);
     document.getElementById(id).appendChild(myWidgetInstance);
+    const sqlite3 = require('sqlite3');
+
+    const db = new sqlite3.Database('./docs.db');
+    console.log(db.get("SELECT * FROM documents"));
 })();
