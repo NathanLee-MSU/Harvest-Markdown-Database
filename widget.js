@@ -24,7 +24,7 @@
 
                     input, textarea, select {border:1px solid #ccc;font-size:1em;padding:3px;margin:0;vertical-align:middle;}
 
-                    .button {display:block;padding:10px;margin:.75em auto;width:15rem;background:var(--dark-color);color:#fff;line-height:1.42857143;text-align:center;white-space:nowrap;vertical-align:middle;-ms-touch-action:manipulation;touch-action:manipulation;cursor:pointer;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;background-image:none;border:1px solid transparent;border-radius:4px}
+                    .button {display:block;padding:10px;margin:.75em auto;width:15rem;background:var(#003f7f);color:#fff;line-height:1.42857143;text-align:center;white-space:nowrap;vertical-align:middle;-ms-touch-action:manipulation;touch-action:manipulation;cursor:pointer;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;background-image:none;border:1px solid transparent;border-radius:4px}
                 `
                 snippet = document.currentScript.innerHTML
 
@@ -37,7 +37,6 @@
                     </head>
 
                     <form action="search.php" class="search-form" id="search-form" method="GET" role="search">
-                        <label class="offscreen" for="q">Search</label>
                         <svg aria-hidden="true" class="search-icon" width="18" height="18" viewBox="0 0 18 18"><path d="M18 16.5l-5.14-5.18h-.35a7 7 0 10-1.19 1.19v.35L16.5 18l1.5-1.5zM12 7A5 5 0 112 7a5 5 0 0110 0z"></path></svg>
                         <input class="text icon-search" type="search" id="q" name="q" maxlength="75" autofocus placeholder="Enter keyword, name, or title..."/>
                         <input class="button" type="submit" value="Search" />                
