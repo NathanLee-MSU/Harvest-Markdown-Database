@@ -41,6 +41,15 @@
                         <input class="text icon-search" type="search" id="q" name="q" maxlength="75" autofocus placeholder="Enter keyword, name, or title..."/>
                         <input class="button" type="submit" value="Search" />                
                     </form>
+
+                    <?php
+                    $db = new SQLite3('docs.db');
+
+                    $results = $db->query('SELECT * FROM documents');
+                    while ($row = $results->fetchArray()) {
+                        print_r($row);
+                    }
+                    ?>
                 `
                 wdg.script = document.createElement("script")
                 wdg.script.setAttribute('type', 'text/javascript');
