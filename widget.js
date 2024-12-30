@@ -44,6 +44,9 @@
 
                     <?php
                     $db = new SQLite3('docs.db');
+                    if($db==""){
+                        echo "this didn't work";
+                    }
 
                     $results = $db->query('SELECT * FROM documents');
                     while ($row = $results->fetchArray()) {
