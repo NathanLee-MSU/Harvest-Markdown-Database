@@ -24,7 +24,7 @@
 
                     input, textarea, select {border:1px solid #ccc;font-size:1em;padding:3px;margin:0;vertical-align:middle;}
 
-                    .button {display:block;padding:10px;margin:.75em auto;width:15rem;background:var( #003f7f);color:#fff;line-height:1.42857143;text-align:center;white-space:nowrap;vertical-align:middle;-ms-touch-action:manipulation;touch-action:manipulation;cursor:pointer;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;background-image:none;border:1px solid transparent;border-radius:4px}
+                    .button {display:block;padding:10px;margin:.75em auto;width:15rem;background: #003f7f;color:#fff;line-height:1.42857143;text-align:center;white-space:nowrap;vertical-align:middle;-ms-touch-action:manipulation;touch-action:manipulation;cursor:pointer;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;background-image:none;border:1px solid transparent;border-radius:4px}
                 `
                 snippet = document.currentScript.innerHTML
 
@@ -47,8 +47,8 @@
                 wdg.script.appendChild(document.createTextNode(`
                     const sqlite3 = require('sqlite3');
 
-                    const db = new sqlite3.Database('./docs.db');
-                    console.log(db.get("SELECT * FROM documents"));
+                    const db = new sqlite3.Database('docs.db');
+                    document.write(db.get(SELECT * FROM documents))
                 `/*Javascript code goes here*/))
                 wdg.appendChild(wdg.script)
                 return wdg;
