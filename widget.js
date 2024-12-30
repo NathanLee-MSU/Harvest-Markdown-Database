@@ -41,22 +41,15 @@
                         <input class="text icon-search" type="search" id="q" name="q" maxlength="75" autofocus placeholder="Enter keyword, name, or title..."/>
                         <input class="button" type="submit" value="Search" />                
                     </form>
-
-                    <?php
-                    $db = new SQLite3('docs.db');
-                    if($db==""){
-                        echo "this didn't work";
-                    }
-
-                    $results = $db->query('SELECT * FROM documents');
-                    while ($row = $results->fetchArray()) {
-                        print_r($row);
-                    }
-                    ?>
                 `
                 wdg.script = document.createElement("script")
                 wdg.script.setAttribute('type', 'text/javascript');
-                wdg.script.appendChild(document.createTextNode(``/*Javascript code goes here*/))
+                wdg.script.appendChild(document.createTextNode(`
+                    const sqlite3 = require('sqlite3');
+
+                    const db = new sqlite3.Database('./docs.db');
+                    console.log(db.get("SELECT * FROM documents"));
+                `/*Javascript code goes here*/))
                 wdg.appendChild(wdg.script)
                 return wdg;
         }
