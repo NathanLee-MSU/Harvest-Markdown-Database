@@ -48,7 +48,7 @@
                     const sqlite3 = require('sqlite3');
 
                     const db = new sqlite3.Database('./docs.db');
-                    document.write(db.get(SELECT * FROM documents))
+                    document.write(db.get(SELECT * FROM documents);
                 `/*Javascript code goes here*/))
                 wdg.appendChild(wdg.script)
                 return wdg;
