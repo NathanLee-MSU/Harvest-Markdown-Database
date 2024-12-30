@@ -2,6 +2,15 @@
     const Widget = Object.create({
         create(id){
             const style = `
+                    :root {
+                        --base-color: #585858;
+                        --dark-color: #003f7f;
+                        --light-color: #fff;
+                        --link-color: #09589a;
+                        --success-color: #f0f8f1;
+                        --warning-color: #fbeeec;
+                        --spacing: 16px;
+                    }
                     .search-icon {
                         margin-top: 5px;
                         pointer-events: none;
