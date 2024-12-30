@@ -45,10 +45,14 @@
                 wdg.script = document.createElement("script")
                 wdg.script.setAttribute('type', 'text/javascript');
                 wdg.script.appendChild(document.createTextNode(`
-                    const sqlite3 = require('sqlite3');
 
-                    const db = new sqlite3.Database('./docs.db');
-                    console.log(db.get("SELECT * FROM documents"));
+                    src='./sql-wasm.js';
+                    config = {
+                        locateFile: filename => './${filename}'
+                    }
+                    
+                    const db = new SQL.Database('./docs.db');
+
                 `/*Javascript code goes here*/))
                 wdg.appendChild(wdg.script)
                 return wdg;
