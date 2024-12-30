@@ -64,5 +64,5 @@
     const sqlite3 = require('sqlite3');
 
     const db = new sqlite3.Database('./docs.db');
-    console.log(db.get("SELECT * FROM documents"));
+    console.log(("test"));
 })();
