@@ -11,12 +11,27 @@
                         --warning-color: #fbeeec;
                         --spacing: 16px;
                     }
+                    .widgetContainer {
+                        display: flex;
+                        flex-direction: row;
+                    }
+                    
+                    .buttonAndInput {
+                        display: flex;
+                        flex-direction: column;
+                    }
+
                     .search-icon {
                         margin-top: 5px;
                         pointer-events: none;
                         color: var( #003f7f);
                         vertical-align: text-top;
-                        }             
+                    }
+                    
+                    .logFrame {
+                        border:1px solid #999999; margin:2px; padding:3px;
+                        flex: 1 0;
+                    }
                     
                     input.text {width:80%;height:40px;padding:6px 12px;line-height:1.42857143;/*background-image:none;*/border:none;border-radius:none;border-bottom:1px solid #ccc;}
                     
@@ -30,29 +45,51 @@
 
                 const wdg = document.createElement("div");
                 wdg.innerHTML = `
+                    <script src='https://lovasoa.github.io/sql.js/js/sql.js'></script>
                     <head>
                         <title>Search</title>
                         <meta name="description" content="Recipe Search Function">
                         <style>${style}</style>
                     </head>
 
-                    <form action="search.php" class="search-form" id="search-form" method="GET" role="search">
-                        <svg aria-hidden="true" class="search-icon" width="18" height="18" viewBox="0 0 18 18"><path d="M18 16.5l-5.14-5.18h-.35a7 7 0 10-1.19 1.19v.35L16.5 18l1.5-1.5zM12 7A5 5 0 112 7a5 5 0 0110 0z"></path></svg>
-                        <input class="text icon-search" type="search" id="q" name="q" maxlength="75" autofocus placeholder="Enter keyword, name, or title..."/>
-                        <input class="button" type="submit" value="Search" />                
-                    </form>
+                    <body>
+                        <div class="widgetContainer">
+                            <div class="buttonAndInput">
+                                <textarea class="text icon-search" type="search" id="q" name="q" maxlength="75" autofocus placeholder="Enter keyword, name, or title..."></textarea>
+                                <button id='safe' class='button'>Search</button>
+                            </div>
+                        <div class='logFrame'></div>
+                        </div>
+                    </body>
                 `
-                wdg.script = document.createElement("script")
+
+                wdg.script = document.createElement("script");
                 wdg.script.setAttribute('type', 'text/javascript');
                 wdg.script.appendChild(document.createTextNode(`
+                    var script = document.createElement('script');
+                        script.type = 'text/javascript';
 
-                    src='./sql-wasm.js';
-                    config = {
-                        locateFile: filename => './${filename}'
-                    }
-                    
-                    const db = new SQL.Database('./docs.db');
+                        script.src = 'https://lovasoa.github.io/sql.js/js/sql.js';
+                        document.body.appendChild(script);
 
+                    function loadBinaryFile(path,success) {
+                        var xhr = new XMLHttpRequest();
+                        xhr.open("GET", path, true); 
+                        xhr.responseType = "arraybuffer";
+                        xhr.onload = function() {
+                            var data = new Uint8Array(xhr.response);
+                            var arr = new Array();
+                            for(var i = 0; i != data.length; ++i) arr[i] = String.fromCharCode(data[i]);
+                            success(arr.join(""));
+                        };
+                        xhr.send();
+                    };
+                    loadBinaryFile('https://cdn.jsdelivr.net/gh/NathanLee-MSU/Harvest-Markdown-Database/docs.db', function(data){
+                        var sqldb = new SQL.Database(data);
+                        // Database is ready
+                        var res = sqldb.exec("SELECT * FROM documents");
+                        console.log(res);
+                    });
                 `/*Javascript code goes here*/))
                 wdg.appendChild(wdg.script)
                 return wdg;
