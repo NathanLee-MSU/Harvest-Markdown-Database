@@ -55,10 +55,10 @@
                     <body>
                         <div class="widgetContainer">
                             <div class="buttonAndInput">
-                                <textarea class="text icon-search" type="search" id="q" name="q" maxlength="75" autofocus placeholder="Enter keyword, name, or title..."></textarea>
+                                <textarea class="text icon-search" type="search" id="input" name="input" maxlength="75" autofocus placeholder="Enter keyword, name, or title..."></textarea>
                                 <button id='safe' class='button'>Search</button>
+                                <ol id="frame" name="frame"></ol>
                             </div>
-                        <div class='logFrame'></div>
                         </div>
                     </body>
                 `
@@ -84,12 +84,38 @@
                         };
                         xhr.send();
                     };
-                    loadBinaryFile('https://cdn.jsdelivr.net/gh/NathanLee-MSU/Harvest-Markdown-Database/docs.db', function(data){
-                        var sqldb = new SQL.Database(data);
-                        // Database is ready
-                        var res = sqldb.exec("SELECT * FROM documents");
-                        console.log(res);
+                    
+                    var safe = document.getElementById('input');
+                    safe.addEventListener('keypress', function(event){
+                        if(event.key === "Enter"){
+                            event.preventDefault();
+                            document.getElementById("safe").click();
+                        }
                     });
+
+                    document.getElementById('safe').addEventListener('click', evaluate);
+
+                    function evaluate() {
+                        var frame = document.getElementById('frame');
+                        var input = document.getElementById('input').value;
+                        loadBinaryFile('https://cdn.jsdelivr.net/gh/NathanLee-MSU/Harvest-Markdown-Database/docs.db', function(data){
+                            var sqldb = new SQL.Database(data);
+                            // Database is ready
+                            var stmt = "SELECT DISTINCT title, url FROM documents WHERE title LIKE '%" + input + "%' OR body LIKE '%" + input + "%'";
+                            var messageFinal = '';
+                            sqldb.each(stmt, function(row){
+                                var message = row.title;
+                                var url = row.url;
+                                message = message.replaceAll('_', ' ');
+                                message = message.replace('- Food Product Development Lab | Montana State University', '');
+                                //console.log(message);
+                                messageFinal += '<a href="' + url + '"><li>' + message +'</li></a>';
+                            });
+                            console.log(messageFinal);
+                            frame.innerHTML = messageFinal
+                        });
+                    }
+
                 `/*Javascript code goes here*/))
                 wdg.appendChild(wdg.script)
                 return wdg;
